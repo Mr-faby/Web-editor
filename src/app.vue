@@ -1,11 +1,16 @@
 <template>
-  <div class="app" id="app">
+  <div class="app-page" id="app">
     <div class="page-top-bar">
-      <div class="home-page" @click="toHome">HMI DESIGNER</div>
+      <router-link to="/home" active-class="home-active">
+        <div class="home-page">HMI DESIGNER</div>
+      </router-link>
+
       <div class="right">
-        <div class="work-space" @click="toWork">工作区</div>
+        <router-link to="/work" active-class="work-active">
+          <div class="work-space">工作区</div>
+        </router-link>
         <div class="avatar">
-          <img src="/src/asset/img/avatar.png" />
+          <img src="/src/asset/img/avatar.png" @click="toGitHub" />
         </div>
       </div>
     </div>
@@ -21,27 +26,14 @@ export default {
     return {};
   },
   methods: {
-    toWork() {
-      this.$router.replace({ name: "work" });
-    },
-
-    toHome() {
-      this.$router.replace({ name: "home" });
-      console.log(this.$route);
+    toGitHub() {
+      window.open("https://github.com/Mr-faby?tab=repositories");
     }
   }
 };
 </script>
 
 <style lang="scss">
-@import "/core/style/iconfont.scss";
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  font-size: 13px;
-}
 #app {
   .page-top-bar {
     height: 40px;
@@ -61,14 +53,23 @@ body {
       cursor: pointer;
       background-color: grey;
       font-weight: bold;
+      &:hover {
+        background-color: rgba(255, 0, 0, 0.5);
+      }
+    }
+    .home-active .home-page {
+      background-color: rgba(255, 0, 0, 0.5);
     }
     .right {
       height: 100%;
       display: flex;
       align-items: center;
       padding: 0 20px;
+      .work-active {
+        display: none;
+      }
       .work-space {
-        background-color: rgba(255, 0, 0, 0.5);
+        background-color: grey;
         padding: 0 15px;
         font-size: 12px;
         height: 25px;
@@ -76,6 +77,9 @@ body {
         display: inline-block;
         cursor: pointer;
         margin-right: 20px;
+        &:hover {
+          background-color: rgba(255, 0, 0, 0.5);
+        }
       }
       .avatar {
         width: 30px;
@@ -91,7 +95,7 @@ body {
     }
   }
   .page-content {
-    padding: 0 20px;
+    padding: 0 5px;
   }
 }
 </style>

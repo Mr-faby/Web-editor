@@ -2,11 +2,13 @@
   <div class="project-list-page">
     <div class="title">项目</div>
     <div class="list">
-      <div class="item">
-        <div class="item-tit">运营报表系统</div>
-        <div class="item-desc">简介：运营报表数据</div>
+      <div class="item" v-for="pro of appProject" :key="pro.project_name">
+        <router-link :to="'./dev/'+pro.project_id">
+          <div class="item-tit">{{pro.project_name}}</div>
+          <div class="item-desc">{{pro.project_desc}}</div>
+        </router-link>
         <div class="item-bot">
-          <span class="iconfont iconshanchu" @click="delProject"></span>
+          <span class="iconfont iconshanchu" @click="delProject(pro.project_id)"></span>
           <span class="iconfont iconkaishi_yunhang" @click="runProject"></span>
         </div>
         <span class="item-operation iconfont iconcaozuo-gengduo"></span>
@@ -50,7 +52,7 @@
       }
       .item-desc {
         height: 100px;
-        text-align: left;
+        text-align: center;
         padding: 15px 10px;
         box-sizing: border-box;
         color: #888;
@@ -95,9 +97,12 @@
 <script>
 export default {
   data: () => {
-    return {
-      str: "haha"
-    };
+    return {};
+  },
+  computed: {
+    appProject() {
+      return this.$store.state.appProject;
+    }
   },
   methods: {
     addProject() {
