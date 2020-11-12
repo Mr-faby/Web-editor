@@ -8,7 +8,18 @@
 </template>
 
 <script>
-export default {};
+import { EmitEvent } from "../../../../../core/js/emit.js";
+
+export default {
+  mounted() {
+    // EmitEvent.$on('dragComp',data => {
+    //   console.log('element',data)
+    // })
+  },
+  destroyed() {
+    // EmitEvent.$off('dragComp')
+  }
+};
 </script>
 
 <style lang="scss" scoped>

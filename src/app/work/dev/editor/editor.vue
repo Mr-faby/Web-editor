@@ -8,6 +8,9 @@
 
 <script>
 import ScaleComponent from "../scale/scale.vue";
+import { EmitEvent } from "../../../../core/js/emit.js";
+import { compConfigList } from "../../../../core/js/comp-config.js";
+
 export default {
   data: () => {
     return {};
@@ -21,6 +24,12 @@ export default {
     }
   },
   mounted() {
+    EmitEvent.$on("dragComp", data => {
+      console.log("data", data);
+    });
+  },
+  destroyed() {
+    EmitEvent.$off("dragComp");
   }
 };
 </script>

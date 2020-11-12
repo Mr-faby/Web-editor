@@ -6,7 +6,13 @@
         <span class="expand iconfont iconzhankai" :class="{expanded:basicCompExpanded}"></span>
       </div>
       <div class="panel" v-show="basicCompExpanded">
-        <div class="comp-item" v-for="comp of basicComp" :key="comp.comp_type">
+        <div
+          class="comp-item"
+          v-for="comp of basicComp"
+          :key="comp.comp_type"
+          draggable="true"
+          @dragstart="dragCompEv(comp.comp_type)"
+        >
           <span class="iconfont" :class="comp.icon"></span>
           <span class="comp-text">{{comp.comp_name}}</span>
         </div>
@@ -18,7 +24,13 @@
         <span class="expand iconfont iconzhankai" :class="{expanded:chartsCompExpanded}"></span>
       </div>
       <div class="panel" v-show="chartsCompExpanded">
-        <div class="comp-item" v-for="comp of chartComp" :key="comp.comp_type">
+        <div
+          class="comp-item"
+          v-for="comp of chartComp"
+          :key="comp.comp_type"
+          draggable="true"
+          @dragstart="dragCompEv(comp.comp_type)"
+        >
           <span class="iconfont" :class="comp.icon"></span>
           <span class="comp-text">{{comp.comp_name}}</span>
         </div>
@@ -28,6 +40,8 @@
 </template>
 
 <script>
+import { EmitEvent } from "../../../../../core/js/emit.js";
+
 export default {
   data: () => {
     return {
@@ -41,6 +55,11 @@ export default {
     },
     chartComp() {
       return this.$store.state.chartsComp;
+    }
+  },
+  methods: {
+    dragCompEv(compType) {
+      EmitEvent.$emit("dragComp", compType);
     }
   }
 };
