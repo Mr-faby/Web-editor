@@ -11,7 +11,7 @@
           v-for="comp of basicComp"
           :key="comp.comp_type"
           draggable="true"
-          @dragstart="dragCompEv(comp.comp_type)"
+          @dragend="dragCompEv(comp,$event)"
         >
           <span class="iconfont" :class="comp.icon"></span>
           <span class="comp-text">{{comp.comp_name}}</span>
@@ -26,10 +26,10 @@
       <div class="panel" v-show="chartsCompExpanded">
         <div
           class="comp-item"
-          v-for="comp of chartComp"
+          v-for="comp of chartsComp"
           :key="comp.comp_type"
           draggable="true"
-          @dragstart="dragCompEv(comp.comp_type)"
+          @dragend="dragCompEv(comp,$event)"
         >
           <span class="iconfont" :class="comp.icon"></span>
           <span class="comp-text">{{comp.comp_name}}</span>
@@ -41,25 +41,30 @@
 
 <script>
 import { EmitEvent } from "../../../../../core/js/emit.js";
+import { basicComp, chartsComp } from "../../../../../core/js/comp-config.js";
 
 export default {
   data: () => {
     return {
       basicCompExpanded: true,
-      chartsCompExpanded: true
+      chartsCompExpanded: true,
+      basicComp,
+      chartsComp,
+      currentPage: null
     };
   },
-  computed: {
-    basicComp() {
-      return this.$store.state.basicComp;
-    },
-    chartComp() {
-      return this.$store.state.chartsComp;
-    }
+  computed: {},
+  mounted() {
+    //监听页面选择事件
+    EmitEvent.$on("selectedPage", page => {
+      this.currentPage = page;
+    });
   },
   methods: {
-    dragCompEv(compType) {
-      EmitEvent.$emit("dragComp", compType);
+    dragCompEv(comp, event) {
+      if (!this.currentPage) return;
+      console.log("drag");
+      EmitEvent.$emit("dragComp", { comp, event });
     }
   }
 };
@@ -99,7 +104,8 @@ export default {
       justify-content: center;
       align-items: center;
       &:hover {
-        background-color: rgba(255, 0, 0, 0.1);
+        background-color: rgba(255, 0, 0, 0.5);
+        color: white;
       }
     }
   }

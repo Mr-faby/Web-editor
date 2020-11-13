@@ -1,6 +1,12 @@
 <template>
   <div class="page-list-page">
-    <div class="page-item" v-for="page of data" :key="page.page_id">
+    <div
+      class="page-item"
+      v-for="page of data"
+      :key="page.page_id"
+      :class="{active:page['page_id'] === currentPageID}"
+      @click="selectPage(page)"
+    >
       <div class="page-info">
         <span class="iconfont iconyemian"></span>
         <span class="page-text">{{page.page_name}}</span>
@@ -14,7 +20,14 @@
 </template>
 
 <script>
+import { EmitEvent } from "../../../../../core/js/emit.js";
+
 export default {
+  data: () => {
+    return {
+      currentPageID: null
+    };
+  },
   props: ["data"],
   methods: {
     editPageInfo() {
@@ -22,6 +35,10 @@ export default {
     },
     delPage() {
       console.log("delPage");
+    },
+    selectPage(page) {
+      this.currentPageID = page["page_id"];
+      EmitEvent.$emit("selectedPage", page);
     }
   }
 };
@@ -39,8 +56,10 @@ export default {
     height: 24px;
     line-height: 24px;
     cursor: pointer;
-    &:hover {
-      background-color: rgba(255, 0, 0, 0.05);
+    &:hover,
+    &.active {
+      background-color: rgba(255, 0, 0, 0.5);
+      color: white;
     }
     .page-edit {
       display: none;

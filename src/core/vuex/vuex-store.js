@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { basicComp, chartsComp } from '../js/comp-config.js';
+// import { basicComp, chartsComp } from '../js/comp-config.js';
 
 Vue.use(Vuex);
 
@@ -26,9 +26,8 @@ export default new Vuex.Store({
                     }
                 ]
             }
-        ],
-        basicComp,
-        chartsComp
+        ]
+        
     },
     mutations: {
         setPage(state, val) {

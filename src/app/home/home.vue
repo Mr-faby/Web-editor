@@ -7,6 +7,7 @@
 
 <style lang="scss" scoped>
   .home-page{
+    margin-top: 100px;
     text-align: center
 
   }
