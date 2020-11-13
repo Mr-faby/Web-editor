@@ -63,7 +63,6 @@ export default {
   methods: {
     dragCompEv(comp, event) {
       if (!this.currentPage) return;
-      console.log("drag");
       EmitEvent.$emit("dragComp", { comp, event });
     }
   }

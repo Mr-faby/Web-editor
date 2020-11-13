@@ -90,6 +90,7 @@ export default {
     .component-area {
       width: 175px;
       border-right: 1px solid #ccc;
+      box-sizing: border-box;
     }
     .design-area {
       flex: 1;

@@ -17,12 +17,15 @@
 import ScaleComponent from "../scale/scale.vue";
 import { EmitEvent } from "../../../../core/js/emit.js";
 import { compList, editorComps } from "../../../../core/js/comp-config.js";
+import * as _ from "lodash";
 
 export default {
   data: () => {
     return {
       pageSelected: false,
-      currentPage: null
+      currentPage: null,
+      marginL: 220,
+      marginT: 65
     };
   },
   components: Object.assign(editorComps, {
@@ -47,11 +50,11 @@ export default {
       const draggedComp = compList.find(
         comp => comp["comp_type"] === _data["comp_type"]
       );
-      // const compStr = JSON.stringify(draggedComp),
-      //   _cloneComp = JSON.parse(compStr);
-      draggedComp["style"]["left"] = _event.clientX;
-      draggedComp["style"]["top"] = _event.clientY;
-      this.currentPage.comp_list.push(draggedComp);
+      const _cloneComp = _.cloneDeep(draggedComp);
+      _cloneComp["style"]["left"] = _event.clientX - this.marginL;
+      _cloneComp["style"]["top"] = _event.clientY - this.marginT;
+      console.log(_event, _cloneComp["style"]["left"]);
+      this.currentPage.comp_list.push(_cloneComp);
     });
   },
   destroyed() {
