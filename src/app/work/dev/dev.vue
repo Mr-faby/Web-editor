@@ -42,7 +42,9 @@ export default {
   },
   computed: {
     currentPro() {
-      return this.$store.state.appProject.find(item => item['project_id'] == this.id);
+      return this.$store.state.appProject.find(
+        item => item["project_id"] == this.id
+      );
     }
   },
   created() {
@@ -98,6 +100,8 @@ export default {
     .config-area {
       width: 175px;
       border-left: 1px solid #ccc;
+      box-sizing: border-box;
+      overflow-y: auto;
     }
   }
 }

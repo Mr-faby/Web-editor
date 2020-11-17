@@ -2,11 +2,26 @@
   <div class="editor-page">
     <scale-component scaleType="scale-x"></scale-component>
     <scale-component scaleType="scale-y"></scale-component>
-    <div class="editor">
+    <div class="editor" @click="editorClickEv">
       <div class="prompt" v-if="!currentPage">选择页面以开始</div>
       <div class="comp-list-wrap" v-if="currentPage">
         <template v-for="(comp,idx) in currentPage.comp_list">
-          <component :is="comp.component" :key="comp.comp_name + idx" :currentComp="comp"></component>
+          <!-- <div
+            class="comp-scale-box"
+            :key="comp.comp_name + idx"
+            :style="{
+              'width':comp.style['width'] + 'px',
+              'height':comp.style['height'] + 'px',
+              'top':comp.style['top'] + 'px',
+              'left':comp.style['left'] + 'px',
+            }"
+          >-->
+          <component
+            :is="comp.component"
+            :currentComp="comp"
+            :key="comp.comp_name + idx"
+          ></component>
+          <!-- </div> -->
         </template>
       </div>
     </div>
@@ -53,13 +68,17 @@ export default {
       const _cloneComp = _.cloneDeep(draggedComp);
       _cloneComp["style"]["left"] = _event.clientX - this.marginL;
       _cloneComp["style"]["top"] = _event.clientY - this.marginT;
-      console.log(_event, _cloneComp["style"]["left"]);
       this.currentPage.comp_list.push(_cloneComp);
     });
   },
   destroyed() {
     EmitEvent.$off("selectedPage");
     EmitEvent.$off("dragComp");
+  },
+  methods: {
+    editorClickEv(){
+      EmitEvent.$emit('selectCompEmit');
+    }
   }
 };
 </script>

@@ -10,6 +10,18 @@ import RadarComponent from '../../app/work/dev/custom-comp/charts/radar.vue';
 import PolyLineComponent from '../../app/work/dev/custom-comp/charts/poly-line.vue';
 import DashboardComponent from '../../app/work/dev/custom-comp/charts/dashboard.vue';
 
+import LineConfigComponent from '../../app/work/dev/custom-config/basic/line-config.vue';
+import TextConfigComponent from '../../app/work/dev/custom-config/basic/text-config.vue';
+import SignalInputConfigComponent from '../../app/work/dev/custom-config/basic/signal-input-config.vue';
+import MultiInputConfigComponent from '../../app/work/dev/custom-config/basic/multi-input-config.vue';
+import ButtonConfigComponent from '../../app/work/dev/custom-config/basic/button-config.vue';
+import ImgConfigComponent from '../../app/work/dev/custom-config/basic/img-config.vue';
+import VideoConfigComponent from '../../app/work/dev/custom-config/basic/video-config.vue';
+import PieConfigComponent from '../../app/work/dev/custom-config/charts/pie-config.vue';
+import RadarConfigComponent from '../../app/work/dev/custom-config/charts/radar-config.vue';
+import PolyLineConfigComponent from '../../app/work/dev/custom-config/charts/poly-line-config.vue';
+import DashboardConfigComponent from '../../app/work/dev/custom-config/charts/dashboard-config.vue';
+
 export const compList = [
     {
         comp_id: 1,
@@ -19,7 +31,17 @@ export const compList = [
         type: 'basic',
         component: LineComponent,
         style: {
-
+            width: 200,
+            height: 30,
+            top: 0,
+            left: 0,
+            borderColor: '#ff0000',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#fff',
+            fontColor: '#000'
         },
         data_source: {
 
@@ -193,3 +215,57 @@ export const editorComps = {
     PolyLineComponent,
     DashboardComponent
 };
+
+export const editorConfigComps = {
+    LineConfigComponent,
+    TextConfigComponent,
+    SignalInputConfigComponent,
+    MultiInputConfigComponent,
+    ButtonConfigComponent,
+    ImgConfigComponent,
+    VideoConfigComponent,
+    PieConfigComponent,
+    RadarConfigComponent,
+    PolyLineConfigComponent,
+    DashboardConfigComponent
+};
+
+export const findConfigComp = (type) => {
+    let configComp = null;
+    switch (type) {
+        case 'line':
+            configComp = LineConfigComponent;
+            break;
+        case 'text':
+            configComp = TextConfigComponent;
+            break;
+        case 'signal-input':
+            configComp = SignalInputConfigComponent;
+            break;
+        case 'multi-input':
+            configComp = MultiInputConfigComponent;
+            break;
+        case 'button':
+            configComp = ButtonConfigComponent;
+            break;
+        case 'img':
+            configComp = ImgConfigComponent;
+            break;
+        case 'video':
+            configComp = VideoConfigComponent;
+            break;
+        case 'pie':
+            configComp = PieConfigComponent;
+            break;
+        case 'radar':
+            configComp = RadarConfigComponent;
+            break;
+        case 'poly-line':
+            configComp = PolyLineConfigComponent;
+            break;
+        case 'dashboard':
+            dashboard = DashboardConfigComponent;
+            break;
+    }
+    return configComp;
+}

@@ -2,38 +2,36 @@
   <div
     class="pie-comp comp-item"
     :style="{
-      'width':style['width'] + 'px',
-      'height':style['height'] + 'px',
-      'top':style['top'] + 'px',
-      'left':style['left'] + 'px',
-      'border-color':style['borderColor'],
-      'border-radius':style['borderRadius'] + '%',
-      'font-size':style['fontSize'] + 'px',
-      'opacity':style['opacity'],
-      'zIndex':style['zIndex'],
-      'background-color':style['backgroundColor'],
-      'color':style['fontColor']
+      'width':currentComp.style['width'] + 'px',
+      'height':currentComp.style['height'] + 'px',
+      'top':currentComp.style['top'] + 'px',
+      'left':currentComp.style['left'] + 'px',
+      'border-color':currentComp.style['borderColor'],
+      'border-radius':currentComp.style['borderRadius'] + '%',
+      'font-size':currentComp.style['fontSize'] + 'px',
+      'opacity':currentComp.style['opacity'],
+      'zIndex':currentComp.style['zIndex'],
+      'background-color':currentComp.style['backgroundColor'],
+      'color':currentComp.style['fontColor']
   }"
+    draggable="true"
+    @click.stop="clickCompEv(currentComp)"
+    @dragstart="dragCompEv(currentComp,$event)"
+    @drag="dragCompEv(currentComp,$event)"
+    @dragend="dragCompEv(currentComp,$event)"
   >pie</div>
 </template>
 
 <script>
+import ExtendComponent from "../../extend/extend.vue";
+
 export default {
+  extends: ExtendComponent,
   data: () => {
-    return {
-      data: null,
-      style: null
-    };
+    return {};
   },
   props: ["currentComp"],
-  created() {
-    this.initData();
-  },
-  methods: {
-    initData() {
-      this.data = this.currentComp["data_source"];
-      this.style = this.currentComp["style"];
-    }
-  }
+  created() {},
+  methods: {}
 };
 </script>
