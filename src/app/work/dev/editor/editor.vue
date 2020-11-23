@@ -6,23 +6,14 @@
       <div class="prompt" v-if="!currentPage">选择页面以开始</div>
       <div class="comp-list-wrap" v-if="currentPage">
         <template v-for="(comp,idx) in currentPage.comp_list">
-          <!-- <div
-            class="comp-scale-box"
-            :key="comp.comp_name + idx"
-            :style="{
-              'width':comp.style['width'] + 'px',
-              'height':comp.style['height'] + 'px',
-              'top':comp.style['top'] + 'px',
-              'left':comp.style['left'] + 'px',
-            }"
-          >-->
           <component
             :is="comp.component"
             :currentComp="comp"
             :key="comp.comp_name + idx"
+            @dragCompEv="dragCompEv(comp,$event)"
           ></component>
-          <!-- </div> -->
         </template>
+        <drag-comp-scale-component :currentComp="activeComp"></drag-comp-scale-component>
       </div>
     </div>
   </div>
@@ -30,6 +21,7 @@
 
 <script>
 import ScaleComponent from "../scale/scale.vue";
+import DragCompScaleComponent from "../drag-comp-scale/drag-comp-scale.vue";
 import { EmitEvent } from "../../../../core/js/emit.js";
 import { compList, editorComps } from "../../../../core/js/comp-config.js";
 import * as _ from "lodash";
@@ -39,12 +31,17 @@ export default {
     return {
       pageSelected: false,
       currentPage: null,
+      currentPageOrigin: null,
+      activeComp: null,
       marginL: 220,
-      marginT: 65
+      marginT: 65,
+      changeX: 0,
+      changeY: 0
     };
   },
   components: Object.assign(editorComps, {
-    ScaleComponent
+    ScaleComponent,
+    DragCompScaleComponent
   }),
   computed: {
     appProject() {
@@ -54,8 +51,15 @@ export default {
   mounted() {
     //监听页面激活事件
     EmitEvent.$on("selectedPage", page => {
-      this.currentPage = page;
+      this.currentPageOrigin = page;
+      const _clonePage = _.cloneDeep(page);
+      this.currentPage = _clonePage;
       //初始化页面所有组件
+    });
+
+    //监听组件点击事件
+    EmitEvent.$on("selectCompEmit", currentComp => {
+      this.activeComp = currentComp;
     });
 
     //监听组件拖拽事件
@@ -70,14 +74,43 @@ export default {
       _cloneComp["style"]["top"] = _event.clientY - this.marginT;
       this.currentPage.comp_list.push(_cloneComp);
     });
+
+    //监听保存配置事件
+    EmitEvent.$on("saveConfigEmit", () => {
+      if (this.currentPage) {
+        this.currentPageOrigin["comp_list"] = this.currentPage["comp_list"];
+        this.$toasted.success("更新成功",{
+          duration : 1000,
+          position:'top-right',
+          fullWidth:true,
+          fitToScreen:true
+        });
+      }
+    });
   },
   destroyed() {
     EmitEvent.$off("selectedPage");
     EmitEvent.$off("dragComp");
+    EmitEvent.$off("saveConfigEmit");
   },
   methods: {
-    editorClickEv(){
-      EmitEvent.$emit('selectCompEmit');
+    dragCompEv(compData, _event) {
+      const type = _event.type,
+        clientX = _event.clientX - this.marginL,
+        clientY = _event.clientY - this.marginT;
+      if (type === "dragstart") {
+        this.changeX = clientX - compData["style"]["left"];
+        this.changeY = clientY - compData["style"]["top"];
+      }
+      if (type === "drag" && _event.clientX === 0 && _event.clientY === 0)
+        return;
+      compData["style"]["left"] =
+        clientX - this.changeX < 0 ? 0 : clientX - this.changeX;
+      compData["style"]["top"] =
+        clientY - this.changeY < 0 ? 0 : clientY - this.changeY;
+    },
+    editorClickEv() {
+      EmitEvent.$emit("selectCompEmit");
     }
   }
 };

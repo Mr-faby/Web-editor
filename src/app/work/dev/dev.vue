@@ -7,7 +7,7 @@
         <span class="iconfont iconwanggeguan" title="网格关"></span>
       </div>
       <span class="running iconfont iconkaishi_yunhang" title="运行"></span>
-      <span class="update">更新</span>
+      <span class="update" @click="updateConfig">更新</span>
     </div>
     <div class="designer">
       <div class="component-area">
@@ -27,6 +27,7 @@
 import EditorComponent from "./editor/editor.vue";
 import DesignLeftBarComponent from "./design-left-bar/design-left-bar.vue";
 import DesignRightBarComponent from "./design-right-bar/design-right-bar.vue";
+import { EmitEvent } from "../../../core/js/emit";
 
 export default {
   data: () => {
@@ -49,6 +50,11 @@ export default {
   },
   created() {
     this.pageList = this.currentPro.pageList;
+  },
+  methods: {
+    updateConfig() {
+      EmitEvent.$emit("saveConfigEmit");
+    }
   }
 };
 </script>

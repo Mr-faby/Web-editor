@@ -30,9 +30,7 @@ export default new Vuex.Store({
         
     },
     mutations: {
-        setPage(state, val) {
-            state.appProject[0].pageList[0].page_name = val;
-        }
+
     },
     getters: {
 

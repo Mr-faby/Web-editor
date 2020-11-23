@@ -9,6 +9,5 @@
   .home-page{
     margin-top: 100px;
     text-align: center
-
   }
 </style>

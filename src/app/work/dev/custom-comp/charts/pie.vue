@@ -16,9 +16,9 @@
   }"
     draggable="true"
     @click.stop="clickCompEv(currentComp)"
-    @dragstart="dragCompEv(currentComp,$event)"
-    @drag="dragCompEv(currentComp,$event)"
-    @dragend="dragCompEv(currentComp,$event)"
+    @dragstart="dragCompEv($event)"
+    @drag="dragCompEv($event)"
+    @dragend="dragCompEv($event)"
   >pie</div>
 </template>
 

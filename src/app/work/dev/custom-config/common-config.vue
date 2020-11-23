@@ -4,21 +4,21 @@
       <div class="width-height label-input">
         <div class="width">
           <label>长</label>
-          <input type="number" name="width" v-model="style['height']" />
+          <input type="number" name="width" v-model.number="style['height']" />
         </div>
         <div class="height">
           <label>宽</label>
-          <input type="number" name="width" v-model="style['width']" />
+          <input type="number" name="width" v-model.number="style['width']" />
         </div>
       </div>
       <div class="x-y label-input">
         <div class="x">
           <label>X</label>
-          <input type="number" name="x" v-model="style['left']" />
+          <input type="number" name="x" v-model.number="style['left']" />
         </div>
         <div class="y">
           <label>Y</label>
-          <input type="number" name="y" v-model="style['top']" />
+          <input type="number" name="y" v-model.number="style['top']" />
         </div>
       </div>
     </div>
@@ -93,6 +93,9 @@ export default {
     style(){
       return this.currentCompData['style']
     }
+  },
+  updated(){
+    console.log('updated')
   }
 };
 </script>

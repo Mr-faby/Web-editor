@@ -1,9 +1,10 @@
 <template>
   <div class="element-list-page">
-    <div class="element-item">1.折线</div>
-    <div class="element-item">2.仪表盘</div>
-    <div class="element-item">3.折线</div>
-    <div class="element-item">4.仪表盘</div>
+    <div
+      class="element-item"
+      v-for="(comp,idx) in compList"
+      :key="comp.comp_name + idx"
+    >{{idx+'.'+comp.comp_name}}</div>
   </div>
 </template>
 
@@ -11,10 +12,16 @@
 import { EmitEvent } from "../../../../../core/js/emit.js";
 
 export default {
+  data: () => {
+    return {
+      compList: null
+    };
+  },
   mounted() {
-    // EmitEvent.$on('dragComp',data => {
-    //   console.log('element',data)
-    // })
+    //监听页面激活事件
+    EmitEvent.$on("selectedPage", page => {
+      this.compList = page["comp_list"] || [];
+    });
   },
   destroyed() {
     // EmitEvent.$off('dragComp')

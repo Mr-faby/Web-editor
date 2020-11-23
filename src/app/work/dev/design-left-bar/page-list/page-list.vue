@@ -39,6 +39,7 @@ export default {
     selectPage(page) {
       this.currentPageID = page["page_id"];
       EmitEvent.$emit("selectedPage", page);
+      EmitEvent.$emit("selectCompEmit");
     }
   }
 };
