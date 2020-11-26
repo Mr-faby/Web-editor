@@ -2,7 +2,7 @@
   <div class="design-right-bar-page" v-if="configComp">
     <div class="comp-info">
       <span class="comp-name">{{currentComp && currentComp['comp_name']}}</span>
-      <span class="iconfont iconshanchu"></span>
+      <span class="iconfont iconshanchu" title="删除" @click="delCompEv"></span>
     </div>
     <div class="data-config">
       <div class="tit">数据</div>
@@ -51,7 +51,11 @@ export default {
   destroyed() {
     EmitEvent.$off("selectCompEmit");
   },
-  methods: {}
+  methods: {
+    delCompEv() {
+      EmitEvent.$emit("delComp");
+    }
+  }
 };
 </script>
 

@@ -9,11 +9,11 @@
     >
       <div class="page-info">
         <span class="iconfont iconyemian"></span>
-        <span class="page-text">{{page.page_name}}</span>
+        <span class="page-text" :title="page.page_desc">{{page.page_name}}</span>
       </div>
       <div class="page-edit">
-        <span class="iconfont iconbianji" @click="editPageInfo(page.page_id)" title="编辑"></span>
-        <span class="iconfont iconshanchu" @click="delPage(page.page_id)" title="删除"></span>
+        <!-- <span class="iconfont iconbianji" @click="editPageInfo(page.page_id)" title="编辑"></span> -->
+        <span class="iconfont iconshanchu" @click.stop="delPage(page.page_id)" title="删除"></span>
       </div>
     </div>
   </div>
@@ -33,13 +33,29 @@ export default {
     editPageInfo() {
       console.log("editPageInfo");
     },
-    delPage() {
-      console.log("delPage");
+    delPage(id) {
+      this.data.splice(
+        this.data.findIndex(page => page["page_id"] === id),
+        1
+      );
+      this.successToast();
+      EmitEvent.$emit("selectedPage");
+      EmitEvent.$emit("selectCompEmit");
+      this.$store.commit("setCurrPageObj", null);
     },
     selectPage(page) {
       this.currentPageID = page["page_id"];
       EmitEvent.$emit("selectedPage", page);
       EmitEvent.$emit("selectCompEmit");
+      this.$store.commit("setCurrPageObj", page);
+    },
+    successToast() {
+      this.$toasted.success("更新成功", {
+        duration: 1000,
+        position: "top-right",
+        fullWidth: true,
+        fitToScreen: true
+      });
     }
   }
 };

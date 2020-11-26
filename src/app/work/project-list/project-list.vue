@@ -2,7 +2,7 @@
   <div class="project-list-page">
     <div class="title">项目</div>
     <div class="list">
-      <div class="item" v-for="pro of appProject" :key="pro.project_name">
+      <div class="item" v-for="(pro,idx) of appProject" :key="pro.project_name + idx">
         <router-link :to="'./dev/'+pro.project_id">
           <div class="item-tit">{{pro.project_name}}</div>
           <div class="item-desc">{{pro.project_desc}}</div>
@@ -13,12 +13,78 @@
         </div>
         <span class="item-operation iconfont iconcaozuo-gengduo"></span>
       </div>
-      <div class="item add-box" @click="addProject">
+      <div class="item add-box" @click="showModal = true">
         <span class="iconfont iconchuangjian"></span>
       </div>
     </div>
+    <create-project-modal v-if="showModal" @close="closeModal" @submit="createProject($event)"></create-project-modal>
   </div>
 </template>
+
+<script>
+import createProjectModal from "./create-project-modal/create-project-modal.vue";
+
+export default {
+  data: () => {
+    return {
+      showModal: false
+    };
+  },
+  components: {
+    createProjectModal
+  },
+  computed: {
+    appProject() {
+      return this.$store.state.appProject;
+    }
+  },
+  methods: {
+    delProject(id) {
+      this.appProject.splice(
+        this.appProject.findIndex(pro => pro["project_id"] === id),
+        1
+      );
+      this.successToast();
+    },
+
+    runProject() {},
+
+    createProject(data) {
+      if (!data) return;
+      let newId;
+      try {
+        newId = this.appProject[this.appProject.length - 1]["project_id"];
+      } catch (err) {
+        newId = 0;
+      }
+      newId++;
+      const pro = Object.assign(
+        {
+          project_id: newId,
+          pageList: []
+        },
+        data
+      );
+      this.appProject.push(pro);
+      this.closeModal();
+      this.successToast();
+    },
+
+    successToast() {
+      this.$toasted.success("更新成功", {
+        duration: 1000,
+        position: "top-right",
+        fullWidth: true,
+        fitToScreen: true
+      });
+    },
+
+    closeModal() {
+      this.showModal = false;
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .project-list-page {
@@ -46,9 +112,8 @@
         border-color: red;
       }
       .item-tit {
-        height: 30px;
-        line-height: 30px;
-        margin: 15px 0;
+        margin-top: 30px;
+        color: #888;
       }
       .item-desc {
         height: 100px;
@@ -93,27 +158,3 @@
   }
 }
 </style>
-
-<script>
-export default {
-  data: () => {
-    return {};
-  },
-  computed: {
-    appProject() {
-      return this.$store.state.appProject;
-    }
-  },
-  methods: {
-    addProject() {
-      console.log("add");
-    },
-    delProject() {
-      console.log("del");
-    },
-    runProject() {
-      console.log("run");
-    }
-  }
-};
-</script>

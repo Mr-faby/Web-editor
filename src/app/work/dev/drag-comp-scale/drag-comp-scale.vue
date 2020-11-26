@@ -3,8 +3,8 @@
     <div
       class="top"
       :style="{
-          top:activeComp['style']['top'] - half + 'px',
-          left:activeComp['style']['left'] + activeComp['style']['width']/2 - half + 'px'
+          top:activeComp['style']['top'] + 20 - half + 'px',
+          left:activeComp['style']['left'] + 40 + activeComp['style']['width']/2 - half + 'px'
       }"
       draggable="true"
       @dragstart="changeWhEv($event,'top')"
@@ -14,8 +14,8 @@
     <div
       class="right"
       :style="{
-        top:activeComp['style']['top'] + activeComp['style']['height']/2 - half + 'px',
-        left:activeComp['style']['left'] + activeComp['style']['width'] - half + 'px'
+        top:activeComp['style']['top'] + 20 + activeComp['style']['height']/2 - half + 'px',
+        left:activeComp['style']['left'] + 40 + activeComp['style']['width'] - half + 'px'
     }"
       draggable="true"
       @dragstart="changeWhEv($event,'right')"
@@ -25,8 +25,8 @@
     <div
       class="bottom"
       :style="{
-        top:activeComp['style']['top'] + activeComp['style']['height'] - half + 'px',
-        left:activeComp['style']['left'] + activeComp['style']['width']/2 - half + 'px'
+        top:activeComp['style']['top'] + 20 + activeComp['style']['height'] - half + 'px',
+        left:activeComp['style']['left'] + 40 + activeComp['style']['width']/2 - half + 'px'
     }"
       draggable="true"
       @dragstart="changeWhEv($event,'bottom')"
@@ -36,8 +36,8 @@
     <div
       class="left"
       :style="{
-        top:activeComp['style']['top'] + activeComp['style']['height']/2 - half + 'px',
-        left:activeComp['style']['left'] - half + 'px'
+        top:activeComp['style']['top'] + 20 + activeComp['style']['height']/2 - half + 'px',
+        left:activeComp['style']['left'] + 40 - half + 'px'
     }"
       draggable="true"
       @dragstart="changeWhEv($event,'left')"
@@ -48,14 +48,14 @@
       class="scale-width-posi"
       :style="{
         width:activeComp['style']['width'] + 'px',
-        left:activeComp['style']['left'] + 'px'
+        left:activeComp['style']['left'] + 40 + 'px'
     }"
     ></div>
     <div
       class="scale-height-posi"
       :style="{
         height:activeComp['style']['height'] + 'px',
-        top:activeComp['style']['top'] + 'px'
+        top:activeComp['style']['top'] + 20 + 'px'
     }"
     ></div>
   </div>
@@ -126,12 +126,12 @@ export default {
     }
     &.scale-width-posi {
       height: 10px;
-      top: -20px;
+      top: 0;
       background-color: rgba(255, 0, 0, 0.3);
     }
     &.scale-height-posi {
       width: 10px;
-      left: -40px;
+      left: 0;
       background-color: rgba(255, 0, 0, 0.3);
     }
   }

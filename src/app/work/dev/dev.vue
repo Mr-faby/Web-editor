@@ -3,8 +3,8 @@
     <div class="designer-top-bar">
       <div class="set-bg">
         <span>背景：</span>
-        <span class="iconfont iconwanggekai" title="网格开"></span>
-        <span class="iconfont iconwanggeguan" title="网格关"></span>
+        <span class="iconfont iconwanggekai" title="网格开" @click="setEditorBg(true)"></span>
+        <span class="iconfont iconwanggeguan" title="网格关" @click="setEditorBg()"></span>
       </div>
       <span class="running iconfont iconkaishi_yunhang" title="运行"></span>
       <span class="update" @click="updateConfig">更新</span>
@@ -14,7 +14,7 @@
         <design-left-bar-component :pageList="pageList"></design-left-bar-component>
       </div>
       <div class="design-area">
-        <editor-component></editor-component>
+        <editor-component :gridBgShow="gridBgShowBol"></editor-component>
       </div>
       <div class="config-area">
         <design-right-bar-component></design-right-bar-component>
@@ -32,7 +32,8 @@ import { EmitEvent } from "../../../core/js/emit";
 export default {
   data: () => {
     return {
-      pageList: null
+      pageList: null,
+      gridBgShowBol: true
     };
   },
   props: ["id"],
@@ -50,10 +51,14 @@ export default {
   },
   created() {
     this.pageList = this.currentPro.pageList;
+    this.$store.commit("setCurrProObj", this.currentPro);
   },
   methods: {
     updateConfig() {
       EmitEvent.$emit("saveConfigEmit");
+    },
+    setEditorBg(bol) {
+      this.gridBgShowBol = bol || false;
     }
   }
 };

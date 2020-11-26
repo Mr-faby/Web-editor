@@ -4,6 +4,7 @@
       class="element-item"
       v-for="(comp,idx) in compList"
       :key="comp.comp_name + idx"
+      @click="selectComp(comp)"
     >{{idx+'.'+comp.comp_name}}</div>
   </div>
 </template>
@@ -14,17 +15,21 @@ import { EmitEvent } from "../../../../../core/js/emit.js";
 export default {
   data: () => {
     return {
-      compList: null
     };
   },
-  mounted() {
-    //监听页面激活事件
-    EmitEvent.$on("selectedPage", page => {
-      this.compList = page["comp_list"] || [];
-    });
+  computed: {
+    compList() {
+      const page = this.$store.state.currentPageObj;
+      return page && page["comp_list"] || [];
+    }
   },
   destroyed() {
     // EmitEvent.$off('dragComp')
+  },
+  methods:{
+    selectComp(currentComp){
+      // EmitEvent.$emit("selectCompEmit", currentComp);
+    }
   }
 };
 </script>

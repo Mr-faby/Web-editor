@@ -4,6 +4,7 @@ import router from './app.routing.js';
 import vuexStore from './core/vuex/vuex-store.js';
 import Toasted from 'vue-toasted';
 require('./core/style/index.scss');
+require('./core/style/form.scss');
 
 const root = document.createElement('div');
 document.body.appendChild(root);

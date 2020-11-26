@@ -26,13 +26,22 @@ export default new Vuex.Store({
                     }
                 ]
             }
-        ]
-        
+        ],
+        currentProjectObj: null,
+        currentPageObj: null
+
     },
     mutations: {
-
+        setCurrProObj(state, data) {
+            state.currentProjectObj = data;
+        },
+        setCurrPageObj(state, data) {
+            state.currentPageObj = data;
+        }
     },
     getters: {
-
+        // currentProject: (state) => () => {
+        //     return state.appProject.find(pro => pro.project_id === state.currProId);
+        // },
     }
 })
