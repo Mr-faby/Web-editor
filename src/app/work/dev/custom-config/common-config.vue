@@ -95,7 +95,7 @@ export default {
     }
   },
   updated(){
-    console.log('updated')
+    // console.log('updated')
   }
 };
 </script>

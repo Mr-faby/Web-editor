@@ -6,8 +6,14 @@
         <span class="iconfont iconwanggekai" title="网格开" @click="setEditorBg(true)"></span>
         <span class="iconfont iconwanggeguan" title="网格关" @click="setEditorBg()"></span>
       </div>
-      <span class="running iconfont iconkaishi_yunhang" title="运行"></span>
-      <span class="update" @click="updateConfig">更新</span>
+      <router-link :to="currentPage && '../run/' + currentPage['page_id'] || ''">
+        <span
+          class="running iconfont iconkaishi_yunhang"
+          title="运行"
+          :class="{'disabled':!currentPage}"
+        ></span>
+      </router-link>
+      <span class="update" :class="{'disabled':!currentPage}" @click="updateConfig">更新</span>
     </div>
     <div class="designer">
       <div class="component-area">
@@ -47,16 +53,22 @@ export default {
       return this.$store.state.appProject.find(
         item => item["project_id"] == this.id
       );
+    },
+    currentPage(){
+      return this.$store.state.currentPageObj
     }
   },
   created() {
     this.pageList = this.currentPro.pageList;
-    this.$store.commit("setCurrProObj", this.currentPro);
+  },
+  destoryed() {
+    EmitEvent.$off("selectedPage");
   },
   methods: {
     updateConfig() {
       EmitEvent.$emit("saveConfigEmit");
     },
+
     setEditorBg(bol) {
       this.gridBgShowBol = bol || false;
     }
@@ -90,11 +102,17 @@ export default {
       color: red;
       margin: 0 50px;
       font-size: 20px;
+      &.disabled {
+        color: #ddd;
+      }
     }
     .update {
       background-color: rgba(255, 0, 0, 0.5);
       padding: 0 15px;
       cursor: pointer;
+      &.disabled{
+        background-color: #ddd;
+      }
     }
   }
   .designer {

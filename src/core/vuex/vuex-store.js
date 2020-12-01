@@ -28,7 +28,8 @@ export default new Vuex.Store({
             }
         ],
         currentProjectObj: null,
-        currentPageObj: null
+        currentPageObj: null,
+        editState: false
 
     },
     mutations: {
@@ -37,6 +38,9 @@ export default new Vuex.Store({
         },
         setCurrPageObj(state, data) {
             state.currentPageObj = data;
+        },
+        setEditState(state, bol) {
+            state.editState = bol;
         }
     },
     getters: {

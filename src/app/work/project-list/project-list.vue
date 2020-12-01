@@ -2,14 +2,23 @@
   <div class="project-list-page">
     <div class="title">项目</div>
     <div class="list">
-      <div class="item" v-for="(pro,idx) of appProject" :key="pro.project_name + idx">
+      <div
+        class="item"
+        v-for="(pro,idx) of appProject"
+        :key="pro.project_name + idx"
+        @click="setProject(pro)"
+      >
         <router-link :to="'./dev/'+pro.project_id">
           <div class="item-tit">{{pro.project_name}}</div>
           <div class="item-desc">{{pro.project_desc}}</div>
         </router-link>
         <div class="item-bot">
-          <span class="iconfont iconshanchu" @click="delProject(pro.project_id)"></span>
-          <span class="iconfont iconkaishi_yunhang" @click="runProject"></span>
+          <span class="iconfont iconshanchu" @click.stop="delProject(pro.project_id)"></span>
+          <span
+            class="iconfont iconkaishi_yunhang run-btn"
+            :class="{'disabled':pro['pageList'].length === 0}"
+            @click="runProject(pro)"
+          ></span>
         </div>
         <span class="item-operation iconfont iconcaozuo-gengduo"></span>
       </div>
@@ -39,15 +48,25 @@ export default {
     }
   },
   methods: {
+    setProject(pro) {
+      this.$store.commit("setCurrProObj", pro);
+    },
     delProject(id) {
       this.appProject.splice(
         this.appProject.findIndex(pro => pro["project_id"] === id),
         1
       );
+      this.$store.commit("setCurrProObj", null);
       this.successToast();
     },
 
-    runProject() {},
+    runProject(pro) {
+      const pages = pro["pageList"];
+      if (!pages.length) return;
+      const page = pages[0];
+      this.$store.commit("setCurrPageObj", page);
+      this.$router.push("./run/" + page["page_id"]);
+    },
 
     createProject(data) {
       if (!data) return;
@@ -136,6 +155,9 @@ export default {
           display: inline-block;
           height: 100%;
           line-height: 40px;
+          &.disabled {
+            color: #ddd;
+          }
           &:hover {
             background-color: #eee;
           }

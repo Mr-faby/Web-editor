@@ -1,5 +1,6 @@
 <template>
   <div class="design-right-bar-page" v-if="configComp">
+    <!-- <div class="page-name">{{currentPage.page_name}}</div> -->
     <div class="comp-info">
       <span class="comp-name">{{currentComp && currentComp['comp_name']}}</span>
       <span class="iconfont iconshanchu" title="删除" @click="delCompEv"></span>
@@ -28,7 +29,8 @@ export default {
   data: () => {
     return {
       configComp: null,
-      currentComp: null
+      currentComp: null,
+      currentPage: null
     };
   },
   props: [],
@@ -46,6 +48,10 @@ export default {
       const type = currentComp["comp_type"];
       this.configComp = findConfigComp(type);
       this.currentComp = currentComp;
+    });
+
+    EmitEvent.$on("selectedPage", page => {
+      this.currentPage = page;
     });
   },
   destroyed() {

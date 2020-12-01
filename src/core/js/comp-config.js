@@ -163,7 +163,17 @@ export const compList = [
         type: 'charts',
         component: RadarComponent,
         style: {
-
+            width: 302,
+            height: 302,
+            top: 0,
+            left: 0,
+            borderColor: '#ff0000',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#fff',
+            fontColor: '#000'
         },
         data_source: {
 
@@ -177,7 +187,17 @@ export const compList = [
         type: 'charts',
         component: PolyLineComponent,
         style: {
-
+            width: 302,
+            height: 302,
+            top: 0,
+            left: 0,
+            borderColor: '#ff0000',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#fff',
+            fontColor: '#000'
         },
         data_source: {
 
@@ -191,7 +211,17 @@ export const compList = [
         type: 'charts',
         component: DashboardComponent,
         style: {
-
+            width: 302,
+            height: 302,
+            top: 0,
+            left: 0,
+            borderColor: '#ff0000',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#fff',
+            fontColor: '#000'
         },
         data_source: {
 

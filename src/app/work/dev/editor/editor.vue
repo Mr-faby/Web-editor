@@ -64,6 +64,7 @@ export default {
     //监听页面激活事件
     EmitEvent.$on("selectedPage", page => {
       if (page) {
+        console.log('editor',page)
         this.currentPageOrigin = page;
         const _clonePage = _.cloneDeep(page);
         this.currentPage = _clonePage;
@@ -192,7 +193,6 @@ export default {
         overflow: hidden;
         width: 100%;
         height: 100%;
-        overflow: hidden;
         .comp-item {
           border-width: 1px;
           border-style: solid;

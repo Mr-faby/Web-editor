@@ -3,6 +3,7 @@ import HomeComponent from './app/home/home.vue';
 import WorkComponent from './app/work/work.vue';
 import ProjectListComponent from './app/work/project-list/project-list.vue';
 import DevComponent from './app/work/dev/dev.vue';
+import RunComponent from './app/work/run/run.vue';
 import Vue from "vue";
 
 
@@ -33,6 +34,11 @@ const router = [
                 name: 'dev',
                 component: DevComponent,
                 props: true
+            },
+            {
+                path: 'run/:id',
+                name: 'run',
+                component: RunComponent
             }
         ]
     },

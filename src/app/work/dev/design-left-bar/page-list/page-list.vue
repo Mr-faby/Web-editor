@@ -29,10 +29,27 @@ export default {
     };
   },
   props: ["data"],
+  computed: {
+    currentPro() {
+      return this.$store.state.currentProjectObj;
+    }
+  },
+  created() {
+    //是否编辑进入
+    const editPageId = this.$route.query["checkPage"];
+    if (editPageId) {
+      const page = this.currentPro["pageList"].find(
+        p => p["page_id"] == editPageId
+      );
+      this.selectPage(page);
+    }
+  },
+  destroyed() {
+    this.$store.commit("setEditState", false);
+    this.$store.commit("setCurrPageObj", null);
+  },
   methods: {
-    editPageInfo() {
-      console.log("editPageInfo");
-    },
+    editPageInfo() {},
     delPage(id) {
       this.data.splice(
         this.data.findIndex(page => page["page_id"] === id),
@@ -45,9 +62,11 @@ export default {
     },
     selectPage(page) {
       this.currentPageID = page["page_id"];
+      console.log(page, this.currentPageID);
       EmitEvent.$emit("selectedPage", page);
       EmitEvent.$emit("selectCompEmit");
       this.$store.commit("setCurrPageObj", page);
+      this.$store.commit("setEditState", true);
     },
     successToast() {
       this.$toasted.success("更新成功", {

@@ -14,7 +14,7 @@
       'background-color':currentComp.style['backgroundColor'],
       'color':currentComp.style['fontColor']
   }"
-    draggable="true"
+    :draggable="editState"
     @click.stop="clickCompEv(currentComp)"
     @dragstart="dragCompEv($event)"
     @drag="dragCompEv($event)"
