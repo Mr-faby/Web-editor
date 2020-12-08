@@ -37,7 +37,7 @@ export default {
 #app {
   .page-top-bar {
     height: 40px;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
     border-bottom: 1px solid #ccc;
     box-sizing: border-box;
     display: flex;

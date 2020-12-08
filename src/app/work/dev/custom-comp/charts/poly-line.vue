@@ -15,23 +15,63 @@
       'color':currentComp.style['fontColor']
   }"
     :draggable="editState"
-    @click.stop="clickCompEv(currentComp)"
+    @click.stop="clickCompEvs(currentComp)"
     @dragstart="dragCompEv($event)"
     @drag="dragCompEv($event)"
     @dragend="dragCompEv($event)"
-  >poly-line</div>
+  >
+    <div :id="currentComp['uuid']" class="echarts"></div>
+  </div>
 </template>
 
 <script>
 import ExtendComponent from "../../extend/extend.vue";
+import { Echarts } from "core/echarts/echarts.js";
 
 export default {
   extends: ExtendComponent,
   data: () => {
-    return {};
+    return {
+      charts: null
+    };
   },
+
   props: ["currentComp"],
-  created() {},
-  methods: {}
+
+  mounted() {
+    this.initEcharts();
+  },
+
+  methods: {
+    initEcharts() {
+      this.charts = Echarts.init(
+        document.getElementById(this.currentComp["uuid"])
+      );
+      this.charts.setOption({
+        xAxis: {
+          type: "category",
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        },
+        yAxis: {
+          type: "value"
+        },
+        series: [
+          {
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: "line"
+          }
+        ]
+      });
+    },
+
+    clickCompEvs(event) {
+      this.charts.resize();
+      this.clickCompEv(event);
+    }
+  }
 };
 </script>
+
+<style lang="scss" scoped>
+
+</style>

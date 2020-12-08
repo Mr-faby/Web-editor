@@ -81,6 +81,7 @@ export default {
   width: 100%;
   height: 800px;
   border: 1px solid #ccc;
+  border-top: none;
   .designer-top-bar {
     position: absolute;
     right: 70px;

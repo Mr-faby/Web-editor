@@ -11,6 +11,12 @@ module.exports = {
         filename: 'bundle.js',
         path: path.join(__dirname, 'dist')
     },
+    resolve: {
+        alias: {
+            app: path.resolve(__dirname, 'src/app'),
+            core: path.resolve(__dirname, 'src/core'),
+        }
+    },
     module: {
         rules: [
             // {
@@ -59,7 +65,7 @@ module.exports = {
     ],
     devServer: {
         port: 8000,
-        host: '0.0.0.0',
+        host: 'localhost',
         overlay: {
             errors: true
         },

@@ -36,7 +36,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .run-page {
   .edit {
     position: absolute;
@@ -67,6 +67,10 @@ export default {
       border-style: solid;
       position: absolute;
       box-sizing: border-box;
+      .echarts{
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

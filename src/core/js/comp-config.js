@@ -294,7 +294,7 @@ export const findConfigComp = (type) => {
             configComp = PolyLineConfigComponent;
             break;
         case 'dashboard':
-            dashboard = DashboardConfigComponent;
+            configComp = DashboardConfigComponent;
             break;
     }
     return configComp;

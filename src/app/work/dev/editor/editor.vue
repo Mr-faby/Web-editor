@@ -64,7 +64,6 @@ export default {
     //监听页面激活事件
     EmitEvent.$on("selectedPage", page => {
       if (page) {
-        console.log('editor',page)
         this.currentPageOrigin = page;
         const _clonePage = _.cloneDeep(page);
         this.currentPage = _clonePage;
@@ -198,6 +197,10 @@ export default {
           border-style: solid;
           position: absolute;
           box-sizing: border-box;
+          .echarts {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }

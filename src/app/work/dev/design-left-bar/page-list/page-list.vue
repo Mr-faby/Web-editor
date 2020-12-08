@@ -34,14 +34,16 @@ export default {
       return this.$store.state.currentProjectObj;
     }
   },
-  created() {
+  mounted() {
     //是否编辑进入
     const editPageId = this.$route.query["checkPage"];
     if (editPageId) {
       const page = this.currentPro["pageList"].find(
         p => p["page_id"] == editPageId
       );
-      this.selectPage(page);
+      setTimeout(()=>{
+        this.selectPage(page);
+      },0)
     }
   },
   destroyed() {
