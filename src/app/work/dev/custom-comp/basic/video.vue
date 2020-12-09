@@ -21,13 +21,14 @@
     @dragend="dragCompEv($event)"
   >
     <video
-      src="https://www.w3schools.com/html/mov_bbb.mp4"
+      src="/src/asset/video/Video_2020-12-09_182038.mp4"
       width="100%"
       height="100%"
       autoplay
       controls
       loop
     >您的浏览器版本过低，请升级浏览器版本</video>
+    <!-- src="https://www.w3schools.com/html/mov_bbb.mp4" -->
   </div>
 </template>
 
@@ -51,6 +52,5 @@ export default {
 
 <style lang="scss" scoped>
 .video-comp {
-
 }
 </style>

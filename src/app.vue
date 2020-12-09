@@ -2,7 +2,7 @@
   <div class="app-page" id="app">
     <div class="page-top-bar">
       <router-link to="/home" active-class="home-active">
-        <div class="home-page">HMI DESIGNER</div>
+        <div class="home-page">WEB EDITOR</div>
       </router-link>
 
       <div class="right">
