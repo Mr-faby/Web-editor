@@ -23,15 +23,39 @@ import PolyLineConfigComponent from '../../app/work/dev/custom-config/charts/pol
 import DashboardConfigComponent from '../../app/work/dev/custom-config/charts/dashboard-config.vue';
 
 export const compList = [
+    // {
+    //     comp_id: 1,
+    //     comp_name: '线段',
+    //     comp_type: 'line',
+    //     icon: 'iconline',
+    //     type: 'basic',
+    //     component: LineComponent,
+    //     style: {
+    //         width: 200,
+    //         height: 30,
+    //         top: 0,
+    //         left: 0,
+    //         borderColor: '#ff0000',
+    //         borderRadius: 0,
+    //         opacity: 1,
+    //         fontSize: 14,
+    //         zIndex: 1,
+    //         backgroundColor: '#fff',
+    //         fontColor: '#000'
+    //     },
+    //     data_source: {
+
+    //     }
+    // },
     {
-        comp_id: 1,
-        comp_name: '线段',
-        comp_type: 'line',
-        icon: 'iconline',
+        comp_id: 2,
+        comp_name: '文本',
+        comp_type: 'text',
+        icon: 'iconwenben',
         type: 'basic',
-        component: LineComponent,
+        component: TextComponent,
         style: {
-            width: 200,
+            width: 120,
             height: 30,
             top: 0,
             left: 0,
@@ -44,21 +68,7 @@ export const compList = [
             fontColor: '#000'
         },
         data_source: {
-
-        }
-    },
-    {
-        comp_id: 2,
-        comp_name: '文本',
-        comp_type: 'text',
-        icon: 'iconwenben',
-        type: 'basic',
-        component: TextComponent,
-        style: {
-
-        },
-        data_source: {
-
+            text: '右侧绑定文本'
         }
     },
     {
@@ -69,10 +79,20 @@ export const compList = [
         type: 'basic',
         component: SignalInputComponent,
         style: {
-
+            width: 120,
+            height: 30,
+            top: 0,
+            left: 0,
+            borderColor: '#ff0000',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#fff',
+            fontColor: '#000'
         },
         data_source: {
-
+            textValue: ''
         }
     },
     {
@@ -83,10 +103,20 @@ export const compList = [
         type: 'basic',
         component: MultiInputComponent,
         style: {
-
+            width: 220,
+            height: 60,
+            top: 0,
+            left: 0,
+            borderColor: '#ff0000',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#fff',
+            fontColor: '#000'
         },
         data_source: {
-
+            textValue: ''
         }
     },
     {
@@ -97,10 +127,20 @@ export const compList = [
         type: 'basic',
         component: ButtonComponent,
         style: {
-
+            width: 80,
+            height: 32,
+            top: 0,
+            left: 0,
+            borderColor: '#fff',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#1890ff',
+            fontColor: '#fff'
         },
         data_source: {
-
+            btnName: '确定'
         }
     },
     {
@@ -111,7 +151,17 @@ export const compList = [
         type: 'basic',
         component: ImgComponent,
         style: {
-
+            width: 425,
+            height: 317,
+            top: 0,
+            left: 0,
+            borderColor: '#fff',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#1890ff',
+            fontColor: '#000'
         },
         data_source: {
 
@@ -125,7 +175,17 @@ export const compList = [
         type: 'basic',
         component: VideoComponent,
         style: {
-
+            width: 320,
+            height: 240,
+            top: 0,
+            left: 0,
+            borderColor: '#ff0000',
+            borderRadius: 0,
+            opacity: 1,
+            fontSize: 14,
+            zIndex: 1,
+            backgroundColor: '#fff',
+            fontColor: '#000'
         },
         data_source: {
 

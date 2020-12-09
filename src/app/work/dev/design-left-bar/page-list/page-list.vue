@@ -64,7 +64,6 @@ export default {
     },
     selectPage(page) {
       this.currentPageID = page["page_id"];
-      console.log(page, this.currentPageID);
       EmitEvent.$emit("selectedPage", page);
       EmitEvent.$emit("selectCompEmit");
       this.$store.commit("setCurrPageObj", page);

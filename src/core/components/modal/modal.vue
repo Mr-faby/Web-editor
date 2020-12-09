@@ -81,16 +81,6 @@ export default {};
     text-align: right;
     button {
       margin-left: 5px;
-      cursor: pointer;
-      color: white;
-      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
-      outline: none;
-      user-select: none;
-      border: 1px solid #d9d9d9;
-      padding: 0 15px;
-      line-height: 1.499;
-      height: 32px;
-      border-radius: 4px;
       &.close {
         background-color: #fff;
         color: rgba(0, 0, 0, 0.65);
@@ -100,8 +90,6 @@ export default {};
         }
       }
       &.submit {
-        background-color: #1890ff;
-        border-color: #1890ff;
         &:hover {
           background-color: #40a9ff;
           border-color: #40a9ff;
