@@ -9,8 +9,7 @@ module.exports = {
     entry: path.join(__dirname, 'src/index.js'),
     output: {
         filename: 'bundle.js',
-        path: path.join(__dirname, 'dist'),
-        publicPath: 'https://mr-faby.github.io/HMI-Designer/dist'
+        path: path.join(__dirname, 'dist')
     },
     resolve: {
         alias: {
@@ -45,7 +44,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(gif|jpg|jpeg|png|svg|PNG)$/,
+                test: /\.(gif|jpg|jpeg|png|svg|PNG|mp4)$/,
                 use: [
                     {
                         loader: 'url-loader',

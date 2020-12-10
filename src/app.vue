@@ -10,7 +10,7 @@
           <div class="work-space">工作区</div>
         </router-link>
         <div class="avatar">
-          <img src="/src/asset/img/avatar.png" @click="toGitHub" />
+          <img src="./asset/img/avatar.png" @click="toGitHub" />
         </div>
       </div>
     </div>

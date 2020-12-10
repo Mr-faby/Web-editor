@@ -20,7 +20,7 @@
     @drag="dragCompEv($event)"
     @dragend="dragCompEv($event)"
   >
-    <img src="/src/asset/img/avatar.png" />
+    <img src="../../../../../asset/img/avatar.png" />
   </div>
 </template>
 

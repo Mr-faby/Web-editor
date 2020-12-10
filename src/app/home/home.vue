@@ -3,7 +3,7 @@
     <h1>Welcome WEB EDITOR</h1>
     <h4>进入工作区以开始</h4>
     <video
-      src="/src/asset/video/Video_2020-12-09_182038.mp4"
+      src="../../asset/video/Video_2020-12-09_182038.mp4"
       width="700px"
       height="360px"
       autoplay
