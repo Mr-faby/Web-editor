@@ -8,3 +8,16 @@ git clone https://github.com/Mr-faby/Web-editor.git
 cd Web-editor
 npm install
 ```
+
+## 运行
+```
+npm run dev
+
+//编译
+npm run build
+```
+
+## 功能介绍
+*项目管理
+*页面管理
+*
