@@ -21,7 +21,7 @@
     @dragend="dragCompEv($event)"
   >
     <video
-      src="/src/asset/video/Video_2020-12-09_182038.mp4"
+      src="../../../../../asset/video/Video_2020-12-09_182038.mp4"
       width="100%"
       height="100%"
       autoplay
