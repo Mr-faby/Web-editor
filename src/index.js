@@ -9,6 +9,17 @@ require('./core/style/form.scss');
 const root = document.createElement('div');
 document.body.appendChild(root);
 
+//set title or icon
+const head = document.getElementsByTagName('head')[0];
+if(head){
+    const linkLabel = document.createElement('link');
+    linkLabel.setAttribute('rel','stylesheet');
+    linkLabel.setAttribute('type','text/css');
+    linkLabel.setAttribute('href','favicon.ico');
+    head.appendChild(linkLabel);
+}
+document.title = "web editor";
+
 Vue.use(Toasted);
 
 new Vue({

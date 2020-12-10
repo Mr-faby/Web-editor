@@ -44,7 +44,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(gif|jpg|jpeg|png|svg|PNG|mp4)$/,
+                test: /\.(gif|jpg|jpeg|png|svg|PNG|ico|mp4)$/,
                 use: [
                     {
                         loader: 'url-loader',
@@ -59,7 +59,9 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new HTMLPlugin(),
+        new HTMLPlugin({
+            favicon: './src/favicon.ico'
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
     ],
