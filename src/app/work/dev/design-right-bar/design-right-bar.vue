@@ -1,20 +1,24 @@
 <template>
-  <div class="design-right-bar-page" v-if="configComp">
+  <div class="design-right-bar-page" v-if="renderComp">
     <!-- <div class="page-name">{{currentPage.page_name}}</div> -->
     <div class="comp-info">
-      <span class="comp-name">{{currentComp && currentComp['comp_name']}}</span>
+      <span class="comp-name">{{
+        currentSelectedComp && currentSelectedComp["comp_name"]
+      }}</span>
       <span class="iconfont iconshanchu" title="删除" @click="delCompEv"></span>
     </div>
     <div class="data-config">
       <div class="tit">数据</div>
       <div class="content">
-        <component :is="configComp" :currentCompData="currentComp"></component>
+        <component :is="renderComp" :currentCompData="currentSelectedComp"></component>
       </div>
     </div>
     <div class="style-config">
       <div class="tit">样式</div>
       <div class="content">
-        <common-config-component :currentCompData="currentComp"></common-config-component>
+        <common-config-component
+          :currentCompData="currentSelectedComp"
+        ></common-config-component>
       </div>
     </div>
   </div>
@@ -22,46 +26,37 @@
 
 <script>
 import CommonConfigComponent from "../custom-config/common-config.vue";
-import { EmitEvent } from "../../../../core/js/emit.js";
 import { findConfigComp } from "../../../../core/js/comp-config.js";
 
 export default {
   data: () => {
     return {
-      configComp: null,
       currentComp: null,
-      currentPage: null
+      currentPage: null,
     };
   },
-  props: [],
+  props: ["currentSelectedComp"],
   components: {
-    CommonConfigComponent
+    CommonConfigComponent,
   },
-  computed: {},
+  computed: {
+    renderComp() {
+      return (
+        (this.currentSelectedComp &&
+          findConfigComp(this.currentSelectedComp["comp_type"])) ||
+        null
+      );
+    },
+  },
   mounted() {
-    EmitEvent.$on("selectCompEmit", currentComp => {
-      if (!currentComp) {
-        this.configComp = null;
-        this.currentComp = null;
-        return;
-      }
-      const type = currentComp["comp_type"];
-      this.configComp = findConfigComp(type);
-      this.currentComp = currentComp;
-    });
-
-    EmitEvent.$on("selectedPage", page => {
-      this.currentPage = page;
-    });
   },
   destroyed() {
-    EmitEvent.$off("selectCompEmit");
   },
   methods: {
     delCompEv() {
-      EmitEvent.$emit("delComp");
-    }
-  }
+      this.$emit("delComp");
+    },
+  },
 };
 </script>
 

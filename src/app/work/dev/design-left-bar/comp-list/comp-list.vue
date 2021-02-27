@@ -1,9 +1,12 @@
 <template>
   <div class="comp-list-page">
     <div class="basic-comp">
-      <div class="panel-head" @click="basicCompExpanded=!basicCompExpanded">
+      <div class="panel-head" @click="basicCompExpanded = !basicCompExpanded">
         <span>基础</span>
-        <span class="expand iconfont iconzhankai" :class="{expanded:basicCompExpanded}"></span>
+        <span
+          class="expand iconfont iconzhankai"
+          :class="{ expanded: basicCompExpanded }"
+        ></span>
       </div>
       <div class="panel" v-show="basicCompExpanded">
         <div
@@ -11,17 +14,20 @@
           v-for="comp of basicComp"
           :key="comp.comp_type"
           draggable="true"
-          @dragend="dragCompEv(comp,$event)"
+          @dragend="emitDragCompEvToParent(comp, $event)"
         >
           <span class="iconfont" :class="comp.icon"></span>
-          <span class="comp-text">{{comp.comp_name}}</span>
+          <span class="comp-text">{{ comp.comp_name }}</span>
         </div>
       </div>
     </div>
     <div class="charts-comp">
-      <div class="panel-head" @click="chartsCompExpanded=!chartsCompExpanded">
+      <div class="panel-head" @click="chartsCompExpanded = !chartsCompExpanded">
         <span>图表</span>
-        <span class="expand iconfont iconzhankai" :class="{expanded:chartsCompExpanded}"></span>
+        <span
+          class="expand iconfont iconzhankai"
+          :class="{ expanded: chartsCompExpanded }"
+        ></span>
       </div>
       <div class="panel" v-show="chartsCompExpanded">
         <div
@@ -29,10 +35,10 @@
           v-for="comp of chartsComp"
           :key="comp.comp_type"
           draggable="true"
-          @dragend="dragCompEv(comp,$event)"
+          @dragend="emitDragCompEvToParent(comp, $event)"
         >
           <span class="iconfont" :class="comp.icon"></span>
-          <span class="comp-text">{{comp.comp_name}}</span>
+          <span class="comp-text">{{ comp.comp_name }}</span>
         </div>
       </div>
     </div>
@@ -40,7 +46,6 @@
 </template>
 
 <script>
-import { EmitEvent } from "../../../../../core/js/emit.js";
 import { basicComp, chartsComp } from "../../../../../core/js/comp-config.js";
 
 export default {
@@ -50,22 +55,18 @@ export default {
       chartsCompExpanded: true,
       basicComp,
       chartsComp,
-      currentPage: null
     };
   },
+  props: ["currentPageData"],
   computed: {},
   mounted() {
-    //监听页面选择事件
-    EmitEvent.$on("selectedPage", page => {
-      this.currentPage = page;
-    });
   },
   methods: {
-    dragCompEv(comp, event) {
-      if (!this.currentPage) return;
-      EmitEvent.$emit("dragComp", { comp, event });
-    }
-  }
+    emitDragCompEvToParent(comp, event) {
+      if (!this.currentPageData) return;
+      this.$emit("listenCompDragFromListEv", { comp, event });
+    },
+  },
 };
 </script>
 

@@ -2,20 +2,44 @@
   <div class="design-left-bar-page">
     <div class="page-comp-wrap">
       <div class="head">
-        <div class="page tab" @click="checkTab(1)" :class="{'active':currentTab === 1}">页面</div>
-        <div class="element tab" @click="checkTab(2)" :class="{'active':currentTab === 2}">元素</div>
+        <div
+          class="page tab"
+          @click="checkTab(1)"
+          :class="{ active: currentTab === 1 }"
+        >
+          页面
+        </div>
+        <div
+          class="element tab"
+          @click="checkTab(2)"
+          :class="{ active: currentTab === 2 }"
+        >
+          元素
+        </div>
         <div class="create-page tab" @click="showModal = true">+</div>
       </div>
       <div class="list">
         <keep-alive>
-          <component :is="currentComponent" :data="pageList"></component>
+          <component
+            :is="currentComponent"
+            :pageList="pageList"
+            @emitselectedPageEv="emitselectedPageEvToDev($event)"
+            @emitDeletePageEv="emitDelPageEvToDev($event)"
+          ></component>
         </keep-alive>
       </div>
     </div>
     <div class="comp-list">
-      <comp-list-component></comp-list-component>
+      <comp-list-component
+        :currentPageData="currentPageData"
+        @listenCompDragFromListEv="emitCompDragEvToDev($event)"
+      ></comp-list-component>
     </div>
-    <create-page-modal v-if="showModal" @close="closeModal" @submit="createPage($event)"></create-page-modal>
+    <create-page-modal
+      v-if="showModal"
+      @close="closeModal"
+      @submit="createPage($event)"
+    ></create-page-modal>
   </div>
 </template>
 
@@ -30,15 +54,15 @@ export default {
     return {
       currentTab: 1,
       currentComponent: PageListComponent,
-      showModal: false
+      showModal: false,
     };
   },
-  props: ["pageList"],
+  props: ["pageList", "currentPageData"],
   components: {
     PageListComponent,
     ElementListComponent,
     CompListComponent,
-    CreatePageModal
+    CreatePageModal,
   },
   methods: {
     checkTab(type) {
@@ -62,7 +86,7 @@ export default {
       const page = Object.assign(
         {
           page_id: newPageId,
-          comp_list: []
+          comp_list: [],
         },
         data
       );
@@ -75,10 +99,19 @@ export default {
         duration: 1000,
         position: "top-right",
         fullWidth: true,
-        fitToScreen: true
+        fitToScreen: true,
       });
-    }
-  }
+    },
+    emitselectedPageEvToDev(currentSelectedPage) {
+      this.$emit("selectedPage", currentSelectedPage);
+    },
+    emitCompDragEvToDev(currentDragComp) {
+      this.$emit("dragCompIcon", currentDragComp);
+    },
+    emitDelPageEvToDev(pageId) {
+      this.$emit("deletePage", pageId);
+    },
+  },
 };
 </script>
 

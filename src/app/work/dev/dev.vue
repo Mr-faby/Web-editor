@@ -3,27 +3,61 @@
     <div class="designer-top-bar">
       <div class="set-bg">
         <span>背景：</span>
-        <span class="iconfont iconwanggekai" title="网格开" @click="setEditorBg(true)"></span>
-        <span class="iconfont iconwanggeguan" title="网格关" @click="setEditorBg()"></span>
+        <span
+          class="iconfont iconwanggekai"
+          title="网格开"
+          @click="setEditorBg(true)"
+        ></span>
+        <span
+          class="iconfont iconwanggeguan"
+          title="网格关"
+          @click="setEditorBg()"
+        ></span>
       </div>
-      <router-link :to="currentPage && '../run/' + currentPage['page_id'] || ''">
+      <router-link
+        :to="
+          (currentPageOriginData &&
+            '../run/' + currentPageOriginData['page_id']) ||
+          ''
+        "
+      >
         <span
           class="running iconfont iconkaishi_yunhang"
           title="运行"
-          :class="{'disabled':!currentPage}"
+          :class="{ disabled: !currentPageLocalData }"
         ></span>
       </router-link>
-      <span class="update" :class="{'disabled':!currentPage}" @click="updateConfig">更新</span>
+      <span
+        class="update"
+        :class="{ disabled: !currentPageLocalData }"
+        @click="updateConfig"
+        >更新</span
+      >
     </div>
     <div class="designer">
       <div class="component-area">
-        <design-left-bar-component :pageList="pageList"></design-left-bar-component>
+        <design-left-bar-component
+          :pageList="pageList"
+          :currentPageData="currentPageLocalData"
+          @selectedPage="selectedPage($event)"
+          @dragCompIcon="dragCompIcon($event)"
+          @deletePage="deletePage($event)"
+        ></design-left-bar-component>
       </div>
       <div class="design-area">
-        <editor-component :gridBgShow="gridBgShowBol"></editor-component>
+        <editor-component
+          :gridBgShow="gridBgShowBol"
+          :currentPageData="currentPageLocalData"
+          :currentSelectedComp="currentSelectedComp"
+          @compClickEv="compClickEv($event)"
+          @compCancelClick="resetRightBarConfigInfo"
+        ></editor-component>
       </div>
       <div class="config-area">
-        <design-right-bar-component></design-right-bar-component>
+        <design-right-bar-component
+          :currentSelectedComp="currentSelectedComp"
+          @delComp="deleteComp"
+        ></design-right-bar-component>
       </div>
     </div>
   </div>
@@ -33,46 +67,120 @@
 import EditorComponent from "./editor/editor.vue";
 import DesignLeftBarComponent from "./design-left-bar/design-left-bar.vue";
 import DesignRightBarComponent from "./design-right-bar/design-right-bar.vue";
-import { EmitEvent } from "../../../core/js/emit";
+import { compList } from "core/js/comp-config.js";
+import * as _ from "lodash";
 
 export default {
   data: () => {
     return {
       pageList: null,
-      gridBgShowBol: true
+      gridBgShowBol: true, //编辑器背景
+      currentPageOriginData: null, //当前页面原始数据，保存后才更新
+      currentPageLocalData: null, //当前页面本地数据
+      currentSelectedComp: null, //当前选中的组件
+      marginL: 220,
+      marginT: 65,
+      changeX: 0,
+      changeY: 0,
     };
   },
+
   props: ["id"],
+
   components: {
     EditorComponent,
     DesignLeftBarComponent,
-    DesignRightBarComponent
+    DesignRightBarComponent,
   },
+
   computed: {
     currentPro() {
       return this.$store.state.appProject.find(
-        item => item["project_id"] == this.id
+        (item) => item["project_id"] == this.id
       );
     },
-    currentPage(){
-      return this.$store.state.currentPageObj
-    }
+
+    currentPage() {
+      return this.$store.state.currentPageObj;
+    },
   },
+
   created() {
     this.pageList = this.currentPro.pageList;
   },
-  destoryed() {
-    EmitEvent.$off("selectedPage");
-  },
-  methods: {
-    updateConfig() {
-      EmitEvent.$emit("saveConfigEmit");
-    },
 
+  mounted() {},
+
+  destoryed() {
+    this.$store.commit("setEditState", false);
+  },
+
+  methods: {
+    //更新配置
+    updateConfig() {
+      this.currentPageOriginData["comp_list"] = this.currentPageLocalData[
+        "comp_list"
+      ];
+      this.$toasted.success("更新成功", {
+        duration: 1000,
+        position: "top-right",
+        fullWidth: true,
+        fitToScreen: true,
+      });
+    },
+    //设置编辑器的背景
     setEditorBg(bol) {
       this.gridBgShowBol = bol || false;
-    }
-  }
+    },
+    //选中一个页面
+    selectedPage(data) {
+      this.currentPageOriginData = data;
+      this.currentPageLocalData = _.cloneDeep(this.currentPageOriginData);
+      //设置编辑器状态
+      this.$store.commit("setEditState", true);
+      this.resetRightBarConfigInfo();
+    },
+    //删除页面
+    deletePage(pageId) {
+      if (!pageId) return;
+      this.pageList.splice(
+        this.pageList.findIndex((page) => page["page_id"] === pageId),
+        1
+      );
+      this.$store.commit("setCurrPageObj", null);
+    },
+    //拖拽组件图标生成组件
+    dragCompIcon(data) {
+      const _data = data["comp"],
+        _event = data["event"];
+      const draggedComp = compList.find(
+        (comp) => comp["comp_type"] === _data["comp_type"]
+      );
+      const _cloneComp = _.cloneDeep(draggedComp);
+      _cloneComp["style"]["left"] = _event.clientX - this.marginL;
+      _cloneComp["style"]["top"] = _event.clientY - this.marginT;
+      _cloneComp["uuid"] = "comp" + this.currentPageLocalData.comp_list.length;
+      this.currentPageLocalData.comp_list.push(_cloneComp);
+    },
+    //组件点击事件，展示当前组件的配置参数
+    compClickEv(data) {
+      this.currentSelectedComp = data;
+    },
+    //重置数据面板
+    resetRightBarConfigInfo() {
+      this.currentSelectedComp = null;
+    },
+    //删除组件
+    deleteComp() {
+      const findIndex = this.currentPageLocalData["comp_list"].findIndex(
+        (comp) => comp["uuid"] === this.currentSelectedComp["uuid"]
+      );
+      if (findIndex >= 0) {
+        this.currentPageLocalData["comp_list"].splice(findIndex, 1);
+        this.resetRightBarConfigInfo();
+      }
+    },
+  },
 };
 </script>
 
@@ -111,7 +219,7 @@ export default {
       background-color: rgba(255, 0, 0, 0.5);
       padding: 0 15px;
       cursor: pointer;
-      &.disabled{
+      &.disabled {
         background-color: #ddd;
       }
     }

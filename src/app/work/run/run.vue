@@ -1,7 +1,7 @@
 <template>
   <div class="run-page">
     <div class="edit">
-      <span class="page_name">组态：{{currentPage['page_name']}}</span>
+      <span class="page_name">组态：{{currentPage && currentPage['page_name']}}</span>
       <span class="iconfont iconbianji edit-icon" title="编辑" @click="toEdit"></span>
     </div>
     <div class="comp-list-wrap" v-if="currentPage">

@@ -3,31 +3,28 @@
 </template>
 
 <script>
-import { EmitEvent } from "../../../../core/js/emit.js";
-
 export default {
   data: () => {
     return {
       style: null,
-      data: null
+      data: null,
     };
   },
-  created() {
-  },
+  created() {},
   computed: {
     editState() {
       return this.$store.state.editState;
-    }
+    },
   },
   methods: {
     clickCompEv(currentComp) {
       if (!this.editState) return;
-      EmitEvent.$emit("selectCompEmit", currentComp);
+      this.$emit("selectCompEmit", currentComp);
     },
     dragCompEv(event) {
       if (!this.editState) return;
       this.$emit("dragCompEv", event);
-    }
-  }
+    },
+  },
 };
 </script>

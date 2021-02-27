@@ -2,35 +2,30 @@
   <div class="element-list-page">
     <div
       class="element-item"
-      v-for="(comp,idx) in compList"
+      v-for="(comp, idx) in compList"
       :key="comp.comp_name + idx"
       @click="selectComp(comp)"
-    >{{idx+'.'+comp.comp_name}}</div>
+    >
+      {{ idx + "." + comp.comp_name }}
+    </div>
   </div>
 </template>
 
 <script>
-import { EmitEvent } from "../../../../../core/js/emit.js";
-
 export default {
   data: () => {
-    return {
-    };
+    return {};
   },
   computed: {
     compList() {
       const page = this.$store.state.currentPageObj;
-      return page && page["comp_list"] || [];
-    }
+      return (page && page["comp_list"]) || [];
+    },
   },
-  destroyed() {
-    // EmitEvent.$off('dragComp')
+  destroyed() {},
+  methods: {
+    selectComp(currentComp) {},
   },
-  methods:{
-    selectComp(currentComp){
-      // EmitEvent.$emit("selectCompEmit", currentComp);
-    }
-  }
 };
 </script>
 
